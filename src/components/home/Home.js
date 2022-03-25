@@ -34,7 +34,7 @@ const Home = () => {
                     placeholder='Nome'
 
                 />
-                <Inputdate/>
+                {/* <Inputdate/> */}
                 <FormSubmitButton onPress={calc} title='Calc' />
             </FormContainer>
         </View>
