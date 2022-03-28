@@ -5,22 +5,28 @@ import FormInput from '../form/Input';
 import { MainContext } from '../context/MainContextProvider';
 import FormContainer from '../form/FormContainer';
 import FormSubmitButton from '../form/FormSubmitButton';
-import Inputdate from '../data/Inputdate';
+import { Inputdate } from '../data/Inputdate';
+import { useNavigation } from '@react-navigation/native';
+
+// import {callForMath} from "../functions/CalcContext";
+// import Calculator from '../functions/Calculator';
 
 const Home = () => {
 
     const languageDef = language.portugues;
     const size = useWindowDimensions();
-    
-    const { Date, Username, setUsername } = useContext(MainContext);
+    const navigation = useNavigation();
 
-    const handleOnChangeText = () => {
-        setUsername()
+    const { date, Username, setUsername } = useContext(MainContext);
+
+    const handleOnChangeText = (value, fieldName) => {
+        setUsername(value);
     };
 
     const calc = () => {
-        console.log(Username);
-        console.log(Date);
+        // callForMath(Username, date);
+        navigation.navigate("Result");
+        /// set callback respose waith for the render of context 
     };
 
     return (
@@ -29,12 +35,11 @@ const Home = () => {
             <FormContainer>
                 <FormInput
                     value={Username}
-                    onChangeText={value => handleOnChangeText(value, 'username')}
+                    onChangeText={value => handleOnChangeText(value, 'Username')}
                     label='Nome'
                     placeholder='Nome'
-
                 />
-                {/* <Inputdate/> */}
+                <Inputdate/>
                 <FormSubmitButton onPress={calc} title='Calc' />
             </FormContainer>
         </View>
@@ -50,13 +55,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#aaa"
     },
     dateIcon: {
-                            //display: 'none',
-                            position: 'absolute',
-                            left: 0,
-                            top: 4,
-                            marginLeft: 0,
-                        },
-                        dateInput: {
-                            marginLeft: 36,
-                        },
+        //display: 'none',
+        position: 'absolute',
+        left: 0,
+        top: 4,
+        marginLeft: 0,
+    },
+    dateInput: {
+        marginLeft: 36,
+    },
 })

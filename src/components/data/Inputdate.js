@@ -1,47 +1,41 @@
+import React, { useState, useContext } from "react"
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { Text, View, Button } from 'react-native'
+import { MainContext } from "../context/MainContextProvider";
 
 export const Inputdate = () => {
-    const [date, setDate] = useState(new Date(1598051730000));
-    const [mode, setMode] = useState('date');
-    const [show, setShow] = useState(false);
-  
-    const onChange = (event, selectedDate) => {
-      const currentDate = selectedDate;
-      setShow(false);
-      setDate(currentDate);
-    };
-  
-    const showMode = (currentMode) => {
-      setShow(true);
-      setMode(currentMode);
-    };
-  
-    const showDatepicker = () => {
-      showMode('date');
-    };
-  
-    const showTimepicker = () => {
-      showMode('time');
-    };
-  
-    return (
+
+  const { date, setDate } = useContext(MainContext);
+  const [predate, setPredate] = useState(new Date());
+
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const dateconverted = `${selectedDate.getUTCFullYear()}-${selectedDate.getDate()}-${selectedDate.getMonth()}`
+    setShow(false);
+    setDate(dateconverted);
+  };
+
+  const showMode = () => {
+    setShow(true);
+
+  };
+
+  return (
+    <View>
       <View>
-        <View>
-          <Button onPress={showDatepicker} title="Show date picker!" />
-        </View>
-        <View>
-          <Button onPress={showTimepicker} title="Show time picker!" />
-        </View>
-        <Text>selected: {date.toLocaleString()}</Text>
-        {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={mode}
-            is24Hour={true}
-            onChange={onChange}
-          />
-        )}
+        <Button onPress={showMode} title="Selecione a data de nascimento" />
       </View>
-    );
-  }
+      <Text>selected: {date}</Text>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={predate}
+          mode={"date"}
+          is24Hour={true}
+          onChange={onChange}
+        />
+      )}
+    </View>
+  );
+}

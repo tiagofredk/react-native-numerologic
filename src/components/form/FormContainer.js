@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         // width: Dimensions.get('window').width,
         height: 200,
         // paddingHorizontal: 20,
-        backgroundColor: "#868686",
+        backgroundColor: "#aaa",
     },
 });
 

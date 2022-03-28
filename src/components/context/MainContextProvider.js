@@ -13,9 +13,10 @@ const MainContextProvider = ({ children }) => {
   const [origin, setOrigin] = useState("");
   const [personality, setPersonality] = useState("");
   const [heart, setHeart] = useState("");
-  const [firstvowel, setFirstvowel] = useState("");
+  const [firstvowelResult, setFirstvowelResult] = useState("");
   const [Username, setUsername] = useState("");
-  const [Date, setDate] = useState("01-01-2022");
+  const [date, setDate] = useState("");
+  const [resultname, setResultname] = useState("")
 
   return (
     <MainContext.Provider
@@ -28,8 +29,10 @@ const MainContextProvider = ({ children }) => {
         origin, setOrigin,
         personality, setPersonality,
         heart, setHeart,
-        firstvowel, setFirstvowel,
-        Username, setUsername
+        firstvowelResult, setFirstvowelResult,
+        Username, setUsername,
+        date, setDate,
+        resultname, setResultname
       }}
     >
       {children}
