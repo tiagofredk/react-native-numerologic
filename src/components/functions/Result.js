@@ -1,48 +1,65 @@
-import { StyleSheet, Text, View, useWindowDimensions } from 'react-native'
-import React, { useContext, useState } from 'react'
-import { MainContext } from '../context/MainContextProvider';
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { MainContext } from '../context/MainContextProvider';
 import { useNavigation } from '@react-navigation/native';
-import { language } from '../data/language'
+import { language } from '../data/language';
 
 const Result = () => {
+
+    useEffect(() => {
+        const res = AsyncStorage.getItem("Username");
+        const datas = AsyncStorage.getItem("date");
+
+        console.log(`AsyncStorage response useEffetc name: ${res}`);
+        console.log(`AsyncStorage response useEffect date: ${datas}`);
+
+    }, [0])
+
+
     const languageDef = language.portugues;
     const size = useWindowDimensions();
-
-    const [showResult, setShowResult] = useState(false)
     const navigation = useNavigation();
-    const {
-        destiny, setDestiny,
-        birthdate, setBirthdate,
-        year, setYear,
-        month, setMonth,
-        day, setDay,
-        origin, setOrigin,
-        personality, setPersonality,
-        heart, setHeart,
-        firstvowelResult, setFirstvowelResult,
-        Username, setUsername,
-        date, setDate,
-        resultname, setResultname
-    } = useContext(MainContext);
 
-    let callForMath = () => {
+    const [resultname, setResultname] = useState("");
+    const [Destiny, setDestiny] = useState("");
+    const [Birthdate, setBirthdate] = useState("");
+    const [Year, setYear] = useState("");
+    const [Month, setMonth] = useState("");
+    const [Day, setDay] = useState("");
+    const [Origin, setOrigin] = useState("");
+    const [Personality, setPersonality] = useState("");
+    const [Heart, setHeart] = useState("");
+    const [FirstvowelResult, setFirstvowelResult] = useState("");
 
-        // console.log(Username);
-        // console.log(date);
+    async function resultValues(value) {
+        username = await AsyncStorage.getItem(`${value} `);
+    }
+
+    let callForMath = async () => {
+        const Username = await AsyncStorage.getItem("Username");
+
+        console.log(`calForMatch ${Username}`);
+
         if (Username.slice(-1) === " ") {
+
             alert(languageDef.alert)
 
         } else if (Username.trim() !== "") {
+
             dom(Username)
-            data(date)
+            data()
+
         } else {
             alert(languageDef.alert2)
         }
         // inputName.current.value = ""
         // BirthDate.current.value = ""
-    }
+    };
+    callForMath();
 
-    function dom(name) {
+    async function dom(name) {
+        console.log(`dom: ${name}`)
         let namedom = name
         setResultname(namedom);
         let name1 = namedom.toLowerCase();
@@ -55,7 +72,8 @@ const Result = () => {
         return splitedname;
     }
 
-    function n32(x) {
+    async function n32(x) {
+        console.log(`n32: ${x}`)
 
         if ((x >= 1 && x <= 9) || x === 11 || x === 22) {
             return x;
@@ -65,49 +83,51 @@ const Result = () => {
         }
     }
 
-    function len1(x) {
+    async function len1(x) {
         let variaveltrans = x.slice(0, 1).toString();
         let hui = calcname(variaveltrans);
         let bless = n32(hui);
         return bless;
     }
 
-    function len2(x) {
+    async function len2(x) {
         let variaveltrans1 = x.slice(1, 2).toString();
         let hui1 = calcname(variaveltrans1);
         let bless1 = n32(hui1);
         return bless1
     }
 
-    function len3(x) {
+    async function len3(x) {
         let variaveltrans2 = x.slice(2, 3).toString();
         let hui2 = calcname(variaveltrans2);
         let bless2 = n32(hui2);
         return bless2;
     }
 
-    function len4(x) {
+    async function len4(x) {
         let variaveltrans2 = x.slice(3, 4).toString();
         let hui2 = calcname(variaveltrans2);
         let bless2 = n32(hui2);
         return bless2;
     }
 
-    function len5(x) {
+    async function len5(x) {
         let variaveltrans = x.slice(4, 5).toString();
         let hui = calcname(variaveltrans);
         let bless = n32(hui);
         return bless;
     }
 
-    function n3(x) {
+    async function n3(x) {
+        console.log(`n3 ${x}`)
 
         if (x.length === 1) {
 
             let call = len1(x);
             let call2 = reducaofinal(call);
 
-            setDestiny(call2);
+            // await AsyncStorage.setItem("Destiny", call2);
+            setDestiny(call2)
         }
 
         if (x.length === 2) {
@@ -116,7 +136,8 @@ const Result = () => {
             let call = callback + callback1;
             let call2 = reducaofinal(call);
 
-            setDestiny(call2);
+            // await AsyncStorage.setItem("Destiny", call2);
+            setDestiny(call2)
         }
 
         if (x.length === 3) {
@@ -130,7 +151,8 @@ const Result = () => {
 
             let call = callback + callback1 + callback2;
             let call2 = reducaofinal(call);
-            setDestiny(call2);
+            // await AsyncStorage.setItem("Destiny", call2);
+            setDestiny(call2)
         }
 
         if (x.length === 4) {
@@ -144,7 +166,8 @@ const Result = () => {
 
             let call = callback + callback1 + callback2 + callback3;
             let call2 = reducaofinal(call);
-            setDestiny(call2);
+            // await AsyncStorage.setItem("Destiny", call2);
+            setDestiny(call2)
         }
 
         if (x.length === 5) {
@@ -160,12 +183,13 @@ const Result = () => {
 
             let call = callback + callback1 + callback2 + callback3 + callback4;
             let call2 = reducaofinal(call);
-            setDestiny(call2);
+            // await AsyncStorage.setItem("Destiny", call2);
+            setDestiny(call2)
         }
     }
 
-    function calcname(x2) {
-
+    async function calcname(x2) {
+        console.log(`calcname ${x2}`)
         let alphabetKey = {
             "a": "1",
             "b": "2",
@@ -219,6 +243,7 @@ const Result = () => {
     }
 
     function reducaofinal(ble) {
+        console.log(`Reducaofinal received: ${ble}`);
 
         if (ble === 11 || ble === 22) {
 
@@ -233,6 +258,7 @@ const Result = () => {
             }
 
             let d = c.map(x => +x);
+
             let e = 0;
 
             d.forEach(Element => {
@@ -251,10 +277,10 @@ const Result = () => {
         }
     }
 
-    function data() {
-        let data = date;
-
-        let data2 = data.split("-");
+    async function data(value) {
+        const date = await AsyncStorage.getItem("date");
+        console.log(`DATA function received value: ${date}`);
+        let data2 = date.split("-");
 
         let year = data2.slice(0, 1).map(x => +x);
         let month = data2.slice(1, 2).map(x => +x);
@@ -270,18 +296,21 @@ const Result = () => {
 
         let year3 = reducaofinal(year2);
 
-        setBirthdate(data);
+        // AsyncStorage.setItem("Birthdate", date);
+        // AsyncStorage.setItem("Year", JSON.stringify(year1));
+        // AsyncStorage.setItem("Month", JSON.stringify(month1));
+        // AsyncStorage.setItem("Day", JSON.stringify(day1));
+        // AsyncStorage.setItem("Origin", JSON.stringify(year3));
+        setBirthdate(date); 1
         setYear(year1);
         setMonth(month1);
         setDay(day1);
         setOrigin(year3);
-
-        setShowResult(true)
     }
 
 
-    function calcconsonant(x) {
-
+    async function calcconsonant(x) {
+        console.log(`calcconsonat ${x}`)
         let namevowel = [];
 
         for (let i = 0; i < x.length; i++) {
@@ -297,11 +326,13 @@ const Result = () => {
         let hui = calcname(variaveltrans);
         let bless = n32(hui);
 
+        // await AsyncStorage.setItem("Personality", JSON.stringify(bless));
         setPersonality(bless);
         return bless;
     }
 
-    function calcvowel(x) {
+    async function calcvowel(x) {
+        console.log(`calcvowel ${x}`)
         let namevowel = [];
 
         for (let i = 0; i < x.length; i++) {
@@ -309,7 +340,6 @@ const Result = () => {
                 namevowel.push(x[i]);
             } else {
                 namevowel.push("_");
-
             }
         }
 
@@ -318,12 +348,13 @@ const Result = () => {
         let hui = calcname(variaveltrans);
         let bless = n32(hui);
 
+        // await AsyncStorage.setItem("Heart", JSON.stringify(bless));
         setHeart(bless);
 
         return bless;
     }
 
-    function firstvowel() {
+    async function firstvowel() {
         let x = resultname;
 
         let firstvowelresult = [];
@@ -336,30 +367,17 @@ const Result = () => {
                 continue;
             }
         }
-        setFirstvowelResult(firstvowelresult);
+        // await AsyncStorage.setItem("FirstvowelResult", JSON.stringify(firstvowelresult));
+        setFirstvowelResult(firstvowelresult)
+        console.log(firstvowelresult);
         return firstvowelresult;
     }
 
-    // callForMath();
-
     return (
         <View style={[styles.container, { height: size.height }]}>
-            <Text>{Username}</Text>
-            <Text>{date}</Text>
-            {showResult &&
-                <>
-                    <Text>{destiny}</Text>
-                    <Text>{birthdate}</Text>
-                    <Text>{year}</Text>
-                    <Text>{month}</Text>
-                    <Text>{day}</Text>
-                    <Text>{origin}</Text>
-                    <Text>{personality}</Text>
-                    <Text>{heart}</Text>
-                    <Text>{firstvowelResult}</Text>
-                    <Text>{resultname}</Text>
-                </>
-            }
+            <Text>Hi</Text>
+            <Text>hi2</Text>
+            <Text>Hi9</Text>
         </View>
     )
 }

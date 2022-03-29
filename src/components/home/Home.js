@@ -2,11 +2,12 @@ import { StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { language } from '../data/language'
 import FormInput from '../form/Input';
-import { MainContext } from '../context/MainContextProvider';
+// import { MainContext } from '../context/MainContextProvider';
 import FormContainer from '../form/FormContainer';
 import FormSubmitButton from '../form/FormSubmitButton';
 import { Inputdate } from '../data/Inputdate';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // import {callForMath} from "../functions/CalcContext";
 // import Calculator from '../functions/Calculator';
@@ -17,16 +18,26 @@ const Home = () => {
     const size = useWindowDimensions();
     const navigation = useNavigation();
 
-    const { date, Username, setUsername } = useContext(MainContext);
+    const [Username, setUsername]  = useState("");
 
-    const handleOnChangeText = (value, fieldName) => {
+    const handleOnChangeText = async (value, fieldname) => {
         setUsername(value);
     };
 
-    const calc = () => {
-        // callForMath(Username, date);
-        navigation.navigate("Result");
-        /// set callback respose waith for the render of context 
+    const calc = async () => {
+        
+        AsyncStorage.setItem("Username", Username);
+        
+        const res = await AsyncStorage.getItem("Username");
+        
+        const datas = await AsyncStorage.getItem("date");
+        
+        if (datas && res) {
+            console.log(`AsyncStorage response Home name: ${res}`);
+            console.log(`AsyncStorage response Home date: ${datas}`);
+            navigation.navigate("Result");
+        } 
+        
     };
 
     return (
@@ -39,7 +50,7 @@ const Home = () => {
                     label='Nome'
                     placeholder='Nome'
                 />
-                <Inputdate/>
+                <Inputdate />
                 <FormSubmitButton onPress={calc} title='Calc' />
             </FormContainer>
         </View>
@@ -50,8 +61,8 @@ export default Home
 
 const styles = StyleSheet.create({
     view: {
-        alignItems: "center",
-        justifyContent: "center",
+        // alignItems: "center",
+        // justifyContent: "center",
         backgroundColor: "#aaa"
     },
     dateIcon: {

@@ -2,8 +2,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import MainContextProvider from './src/components/context/MainContextProvider';
-import Result from './src/components/functions/Result';
 import Home from './src/components/home/Home';
+import Result from './src/components/functions/Result';
 
 export default function App() {
   
