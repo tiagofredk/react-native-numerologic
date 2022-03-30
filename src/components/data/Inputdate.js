@@ -11,12 +11,18 @@ export const Inputdate = () => {
 
   const [show, setShow] = useState(false);
 
-  const onChange = (event, selectedDate) => {
-    const dateconverted = `${selectedDate.getUTCFullYear()}-${selectedDate.getDate()}-${selectedDate.getMonth()}`
-    console.log(`dateconverted variable from inputdate module ${dateconverted}`)
-    setShow(false);
-    setDate(dateconverted);
-    AsyncStorage.setItem("date", dateconverted);
+  const onChange = async (event, selectedDate) => {
+    try {
+      console.log(selectedDate);
+      const dateconverted = `${selectedDate.getUTCFullYear()}-${selectedDate.getDate()}-${selectedDate.getMonth() +1}`;
+      console.log(`dateconverted variable from inputdate module ${dateconverted}`);
+      setShow(false);
+      setDate(dateconverted);
+      await AsyncStorage.setItem("date", dateconverted);
+      
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const showMode = () => {
