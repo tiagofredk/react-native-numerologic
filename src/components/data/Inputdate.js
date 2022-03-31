@@ -14,7 +14,7 @@ export const Inputdate = () => {
   const onChange = async (event, selectedDate) => {
     try {
       console.log(selectedDate);
-      const dateconverted = `${selectedDate.getUTCFullYear()}-${selectedDate.getDate()}-${selectedDate.getMonth() +1}`;
+      const dateconverted = `${selectedDate.getUTCFullYear()}-${selectedDate.getMonth() +1}-${selectedDate.getDate()}`;
       console.log(`dateconverted variable from inputdate module ${dateconverted}`);
       setShow(false);
       setDate(dateconverted);
